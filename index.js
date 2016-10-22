@@ -19,6 +19,7 @@ app.get('/', function(req, res) {
 app.get("/callback", function (req, res) {
     // exchange the authorization code we just received for an access token
     client.getAccessToken(req.query.code, 'https://secure-river-97770.herokuapp.com/callback').then(function (result) {
+	console.log("We got access_token="+result.access_token);
         // use the access token to fetch the user's profile information
         client.get("https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/18:00/19:01.json", result.access_token).then(function (results) {
             res.send(results[0]);
