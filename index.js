@@ -15,8 +15,3 @@ router.get('/', function(req, res, next) {
 module.exports = router;
 
 
-express.listen(express.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
-
-
