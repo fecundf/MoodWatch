@@ -4,6 +4,7 @@ var client;
 
 app.set('port', (process.env.PORT || 5000));
 app.set('view engine', 'pug');
+app.use(express.static('public'));
 
 var our_URI='http://localhost:5000';
 
