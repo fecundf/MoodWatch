@@ -1,9 +1,9 @@
 var express = require('express');
 var app = express();
 var client;
-//var jsdom = require('jsdom') for smileys
 
 app.set('port', (process.env.PORT || 5000));
+app.set('view engine', 'pug');
 
 var our_URI='http://localhost:5000';
 
@@ -27,35 +27,30 @@ app.get("/callback", function (req, res) {
     // var curtime=
 	request.get("https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/08:00/09:01.json",
 		    { 'auth': { 'bearer': result.access_token } },
-		    function(error, response, body) {
+      function(error, response, body) {
           console.log(body);
 
           var data=JSON.parse(body);
           var rate=data["activities-heart-intraday"]["dataset"][0]["value"];
           console.log('rate='+rate);
+	  var face;
           if (rate >=130 && rate <=140 ) {
-            res.send(":S") ;
-        } else if (rate >140) {
-            res.send( ":(");
-        } else {
-            res.send(":)");
-        }
-		    });
+              // res.send(":S") ;
+	          face = 'uhoh.png';
+          } else if (rate >140) {
+              // res.send( ":(");
+	         face = 'frown.png';
+          } else {
+              // res.send(":)");
+              face = 'smile.jpg'
+          }
+          res.render('index', {face: face})
+      });
 
     }).catch(function (error) {
         res.send(error);
     });
 });
-
-//change smileys to nice once
-/*
-jsdom.env({
-    html: "<p><code>jhhh</code><em>:)</em></p>",
-    done: function(errors, window) {
-        emojify.run(window.document.body)
-    }
-});
-*/
 
 // launch the server
 app.listen(app.get('port'), function() {
