@@ -26,7 +26,7 @@ app.get("/callback", function (req, res) {
 	request.get("https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/18:00/19:01.json",
 		    { 'auth': { 'bearer': result.access_token } },
 		    function(error, response, body) {
-			console.log('body='+body);
+			return ('body='+JSON.parse(body));
 		    });
 
     }).catch(function (error) {
