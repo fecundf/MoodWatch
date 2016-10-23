@@ -12,7 +12,8 @@
   "dependencies": {
     "ejs": "2.4.1",
     "express": "4.13.3",
-    "fitbit-node": "2.0.1"
+    "fitbit-node": "2.0.1",
+    "request": "2.75.0"
   },
   "repository": {
     "type": "git",

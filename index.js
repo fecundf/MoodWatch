@@ -17,18 +17,18 @@ app.get('/', function(req, res) {
     our_URI+'/callback'));
 });
 
-
-var url_heart = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec.json"
-
 // handle the callback from the Fitbit authorization flow
 app.get("/callback", function (req, res) {
     // exchange the authorization code we just received for an access token
     client.getAccessToken(req.query.code, our_URI+'/callback').then(function (result) {
-	console.log("We got access_token="+result.access_token);
+	var request = require("request");
         // use the access token to fetch the user's profile information
-        client.get(url_heart, result.access_token).then(function (results) {
-            res.send(results);
-        });
+	request.get("https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/18:00/19:01.json",
+		    { 'auth': { 'bearer': result.access_token } },
+		    function(error, response, body) {
+			console.log('body='+body);
+		    });
+
     }).catch(function (error) {
         res.send(error);
     });
