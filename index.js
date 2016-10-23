@@ -24,7 +24,7 @@ app.get("/callback", function (req, res) {
 	var request = require("request");
     // use the access token to fetch the user's heart rate
     // var curtime=
-	request.get("https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/19:00/19:01.json",
+	request.get("https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/02:00/02:01.json",
 		    { 'auth': { 'bearer': result.access_token } },
 		    function(error, response, body) {
           console.log(body);
