@@ -22,12 +22,26 @@ app.get("/callback", function (req, res) {
     // exchange the authorization code we just received for an access token
     client.getAccessToken(req.query.code, our_URI+'/callback').then(function (result) {
 	var request = require("request");
-        // use the access token to fetch the user's profile information
-	request.get("https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/18:00/19:01.json",
+    // use the access token to fetch the user's heart rate
+    // var curtime=
+	request.get("https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/19:00/19:01.json",
 		    { 'auth': { 'bearer': result.access_token } },
 		    function(error, response, body) {
-			return ('body='+JSON.parse(body));
+          console.log(body);
+
+          var data=JSON.parse(body);
+          var rate=data["activities-heart-intraday"]["dataset"][0]["value"];
+          console.log('rate='+rate);
+          if (rate >=130 && rate <=140 ) {
+            res.send(":S") ;
+        } else if (rate >140) {
+            res.send( ":(");
+        } else {
+            res.send(":)");
+        }
 		    });
+
+
 
     }).catch(function (error) {
         res.send(error);
